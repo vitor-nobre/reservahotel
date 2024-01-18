@@ -1,7 +1,6 @@
 package com.br.reservahotel.usuario;
 
 import org.springframework.stereotype.Service;
-
 import java.util.List;
 
 @Service
@@ -17,6 +16,9 @@ public class UsuarioService {
     }
 
     protected Usuario create(Usuario usuario) {
+        if(!usuario.isValid()){
+            throw new UsuarioNotFoundException();
+        }
         return repository.save(usuario);
     }
 

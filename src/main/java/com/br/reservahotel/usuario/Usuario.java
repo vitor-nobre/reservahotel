@@ -1,12 +1,15 @@
 package com.br.reservahotel.usuario;
 
+import com.br.reservahotel.model.Entidade;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.PrimaryKeyJoinColumn;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Usuario {
+public class Usuario implements Entidade {
 
     @Id
     @GeneratedValue
@@ -57,5 +60,9 @@ public class Usuario {
 
     public void setTelefone(Integer telefone) {
         this.telefone = telefone;
+    }
+
+    public boolean isValid() {
+        return (this != null && nome != null && email != null && telefone != null);
     }
 }

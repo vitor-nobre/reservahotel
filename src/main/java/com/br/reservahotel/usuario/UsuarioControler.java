@@ -1,18 +1,17 @@
 package com.br.reservahotel.usuario;
 
+import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
-@RequestMapping("/Usuario")
+@RequestMapping("/usuario")
 public class UsuarioControler {
 
+    @Autowired
     private UsuarioService service;
-
-    UsuarioControler(UsuarioService service) {
-        this.service = service;
-    }
 
     @PostMapping
     public void create(@RequestBody Usuario usuario) {

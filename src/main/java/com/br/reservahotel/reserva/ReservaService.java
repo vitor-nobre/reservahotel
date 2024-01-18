@@ -2,6 +2,7 @@ package com.br.reservahotel.reserva;
 
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -17,7 +18,10 @@ public class ReservaService {
     }
 
     protected Reserva create(Reserva reserva) {
-        return repository.save(reserva);
+        if (reserva.isValid() && reservaDisponivel(reserva)) {
+            return repository.save(reserva);
+        }
+        return reserva;
     }
 
     protected Reserva one(Long id) {
@@ -42,5 +46,15 @@ public class ReservaService {
 
     protected void delete(Long id) {
         repository.deleteById(id);
+    }
+
+    protected boolean reservaDisponivel(Reserva reserva) {
+
+        Reserva r = repository.verificaDisponibilidade(reserva.getQuarto().getId(), reserva.getCheckIn(), reserva.getCheckOut());
+        if (r == null || !r.isValid()) {
+            return true;
+        }
+
+        return false;
     }
 }

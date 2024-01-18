@@ -1,34 +1,40 @@
 package com.br.reservahotel.reserva;
 
-import com.br.reservahotel.hotel.Hotel;
+import com.br.reservahotel.model.Entidade;
 import com.br.reservahotel.quarto.Quarto;
 import com.br.reservahotel.usuario.Usuario;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Date;
 
 @Entity
-public class Reserva {
+public class Reserva implements Entidade {
 
     @Id
     @GeneratedValue
     private Long id;
 
+    @NotNull
     private Integer status;
 
+    @NotNull
     private Date checkIn;
+
+    @NotNull
     private Date checkOut;
 
     @ManyToOne
-    @JoinColumn(name = "id_quarto")
+    @JoinColumn
+    @NotNull
     private Quarto quarto;
 
     @ManyToOne
-    @JoinColumn(name = "id_usuario")
+    @JoinColumn
+    @NotNull
     private Usuario usuario;
 
     public Reserva() {
-
     }
 
     public Long getId() {
@@ -43,7 +49,7 @@ public class Reserva {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    protected void setStatus(Integer status) {
         this.status = status;
     }
 
@@ -51,7 +57,7 @@ public class Reserva {
         return checkIn;
     }
 
-    public void setCheckIn(Date checkIn) {
+    protected void setCheckIn(Date checkIn) {
         this.checkIn = checkIn;
     }
 
@@ -59,7 +65,7 @@ public class Reserva {
         return checkOut;
     }
 
-    public void setCheckOut(Date checkOut) {
+    protected void setCheckOut(Date checkOut) {
         this.checkOut = checkOut;
     }
 
@@ -67,7 +73,7 @@ public class Reserva {
         return quarto;
     }
 
-    public void setQuarto(Quarto quarto) {
+    protected void setQuarto(Quarto quarto) {
         this.quarto = quarto;
     }
 
@@ -75,7 +81,12 @@ public class Reserva {
         return usuario;
     }
 
-    public void setUsuario(Usuario usuario) {
+    protected void setUsuario(Usuario usuario) {
         this.usuario = usuario;
+    }
+
+    @Override
+    public boolean isValid() {
+        return (this != null && checkIn != null && checkOut != null && status != null && usuario.isValid() && quarto.isValid());
     }
 }

@@ -1,10 +1,12 @@
 package com.br.reservahotel.quarto;
 
 import com.br.reservahotel.hotel.Hotel;
+import com.br.reservahotel.model.Entidade;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 
 @Entity
-public class Quarto {
+public class Quarto implements Entidade {
 
     @Id
     @GeneratedValue
@@ -15,11 +17,13 @@ public class Quarto {
 
     private String endereco;
 
+    @NotNull
     private String tipoQuarto;
 
     @ManyToOne
-    @JoinColumn(name = "hotel_id")
+    @NotNull
     private Hotel hotel;
+
     public Quarto() {
 
     }
@@ -67,5 +71,10 @@ public class Quarto {
 
     public void setTipoQuarto(String tipoQuarto) {
         this.tipoQuarto = tipoQuarto;
+    }
+
+    @Override
+    public boolean isValid() {
+        return (tipoQuarto != null && nome != null);
     }
 }
