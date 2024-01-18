@@ -1,20 +1,25 @@
 package com.br.reservahotel.quarto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.br.reservahotel.hotel.Hotel;
+import jakarta.persistence.*;
 
 @Entity
 public class Quarto {
 
     @Id
     @GeneratedValue
+    @PrimaryKeyJoinColumn
     private Long id;
 
     private String nome;
 
     private String endereco;
 
+    private String tipoQuarto;
+
+    @ManyToOne
+    @JoinColumn(name = "hotel_id")
+    private Hotel hotel;
     public Quarto() {
 
     }
@@ -28,7 +33,7 @@ public class Quarto {
         return id;
     }
 
-    public void setId(Long id) {
+    protected void setId(Long id) {
         this.id = id;
     }
 
@@ -36,7 +41,7 @@ public class Quarto {
         return nome;
     }
 
-    public void setNome(String nome) {
+    protected void setNome(String nome) {
         this.nome = nome;
     }
 
@@ -44,7 +49,23 @@ public class Quarto {
         return endereco;
     }
 
-    public void setEndereco(String endereco) {
+    protected void setEndereco(String endereco) {
         this.endereco = endereco;
+    }
+
+    public Hotel getHotel() {
+        return hotel;
+    }
+
+    public void setHotel(Hotel hotel) {
+        this.hotel = hotel;
+    }
+
+    public String getTipoQuarto() {
+        return tipoQuarto;
+    }
+
+    public void setTipoQuarto(String tipoQuarto) {
+        this.tipoQuarto = tipoQuarto;
     }
 }

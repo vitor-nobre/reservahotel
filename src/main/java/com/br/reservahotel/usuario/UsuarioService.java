@@ -28,7 +28,8 @@ public class UsuarioService {
         return repository.findById(id)
                 .map(usuarioDb -> {
                     usuarioDb.setNome(usuario.getNome());
-                    usuarioDb.setEndereco(usuario.getEndereco());
+                    usuarioDb.setEmail(usuario.getEmail());
+                    usuarioDb.setTelefone(usuario.getTelefone());
                     return repository.save(usuarioDb);
                 })
                 .orElseGet(() -> {
